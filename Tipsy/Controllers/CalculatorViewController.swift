@@ -16,28 +16,24 @@ class CalculatorViewController: UIViewController {
     @IBOutlet weak var twentyPctButton: UIButton!
     @IBOutlet weak var splitNumberLabel: UILabel!
     
-    var pctSelected = 0.1
+    var tip = 0.1
     var tipperNum = 2
-    
+    var billAmount = 0.0
+    var result = 0.0
    
     @IBAction func tipChanged(_ sender: UIButton) {
+        
+        billTextField.endEditing(true)
         
         zeroPctButton.isSelected = false
         tenPctButton.isSelected = false
         twentyPctButton.isSelected = false
+        sender.isSelected = true
         
-        if sender.currentTitle == "0%"{
-            zeroPctButton.isSelected = true
-                pctSelected = 0.0
-            } else if sender.currentTitle == "10%"{
-                tenPctButton.isSelected = true
-                
-                pctSelected = 0.1
-            } else {
-                twentyPctButton.isSelected = true
-                zeroPctButton.isSelected = false
-                pctSelected = 0.2
-            }
+        let buttonTitle = sender.currentTitle!
+        let buttonTitleMinusPercentSign = String(buttonTitle.dropLast())
+        let buttonTitleAsAnswer = Double(buttonTitleMinusPercentSign)!
+        tip = buttonTitleAsAnswer / 100
     }
     
     @IBAction func stepperValueChanged(_ sender: UIStepper) {
@@ -46,12 +42,29 @@ class CalculatorViewController: UIViewController {
     }
     
     @IBAction func calculatePressed(_ sender: Any) {
-        print("tip: \(pctSelected)")
-        print("tippers: \(tipperNum)")
+    
+        let bill = billTextField.text!
+        
+        if bill != "" {
+            billAmount = Double(bill)!
+            result = billAmount * (1 + tip) / Double(tipperNum)
+            print("result is: \(result)")
+            
+            performSegue(withIdentifier: "goToResult", sender: self)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToResult" {
+            let destinationVC = segue.destination as! ResultsViewController
+            destinationVC.totalBill = String(format: "%0.2f", result)
+            print("result is: \(result)")
+            destinationVC.settingsInfo = String("Split between \(tipperNum) people, with \(tip * 100)% tip")
+            
+        }
     }
     
     
-
-
+    
 }
 

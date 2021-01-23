@@ -10,17 +10,24 @@ import UIKit
 
 class ResultsViewController: UIViewController {
 
+    var totalBill: String?
+    var settingsInfo: String?
+    
+    
+    
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var settingsLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        totalLabel.text = totalBill
+        settingsLabel.text = settingsInfo
+        
+        
     }
     
     @IBAction func recalculatePressed(_ sender: UIButton) {
-        
+        self.dismiss(animated: true, completion: nil)
     }
     
     
