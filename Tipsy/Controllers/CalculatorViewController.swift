@@ -72,14 +72,26 @@ class CalculatorViewController: UIViewController {
             let totalCt = String(Int(billAmount + (billAmount * tip))).count
             
      // this array sets up the number of spaces to place in front of the number to align them with each other
-            let spacer = [
-            "",
-            " ",
-            "  ",
-            "   ",
-            "    "
-            ]
+//            let spacer = [
+//            "",
+//            " ",
+//            "  ",
+//            "   ",
+//            "    "
+//            ]
        
+            let spacer = [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                
+            ]
+            
+            
+            
        // initialize the numberFormatter method, this will limit decimals to only 2 and will insert commmas
        // as thousands separators
             
